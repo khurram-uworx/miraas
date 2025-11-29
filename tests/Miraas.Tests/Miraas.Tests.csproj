@@ -20,4 +20,8 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../src/MiraasWeb/MiraasWeb.csproj" />
+  </ItemGroup>
+
 </Project>
