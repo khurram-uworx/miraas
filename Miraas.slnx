@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".github/copilot-instructions.md" />
+    <File Path=".github/workflows/deploy.yml" />
+    <File Path="DOMAIN.md" />
+    <File Path="LICENSE.txt" />
+    <File Path="OVERVIEW.md" />
+    <File Path="README.md" />
+    <File Path="RULES.md" />
+  </Folder>
+  <Project Path="src/MiraasWeb/MiraasWeb.csproj" Id="b864db37-226f-4124-a155-e26b04592f6e" />
+  <Project Path="tests/Miraas.Tests/Miraas.Tests.csproj" Id="d7c69ceb-70c2-45e7-9675-d060b9454019" />
+</Solution>
