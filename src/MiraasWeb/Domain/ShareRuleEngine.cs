@@ -21,11 +21,11 @@ public class ShareRule
 /// </summary>
 public class ShareRuleEngine
 {
-    private readonly List<ShareRule> _rules;
+    readonly List<ShareRule> rules;
 
     public ShareRuleEngine()
     {
-        _rules = new List<ShareRule>();
+        rules = new List<ShareRule>();
         initializeShareRules();
     }
 
@@ -35,23 +35,23 @@ public class ShareRuleEngine
     void initializeShareRules()
     {
         // Husband: 1/2 or 1/4
-        _rules.Add(new ShareRule(RelationType.Husband, case_ =>
+        rules.Add(new ShareRule(RelationType.Husband, inheritanceCase =>
         {
-            bool hasDescendants = case_.HasHeir(RelationType.Son) ||
-                                 case_.HasHeir(RelationType.Daughter) ||
-                                 case_.HasHeir(RelationType.SonOfSon) ||
-                                 case_.HasHeir(RelationType.DaughterOfSon);
+            bool hasDescendants = inheritanceCase.HasHeir(RelationType.Son) ||
+                                 inheritanceCase.HasHeir(RelationType.Daughter) ||
+                                 inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                                 inheritanceCase.HasHeir(RelationType.DaughterOfSon);
             
             return hasDescendants ? new Fraction(1, 4) : new Fraction(1, 2);
         }));
 
         // Wife: 1/4 or 1/8 (divided equally among all wives)
-        _rules.Add(new ShareRule(RelationType.Wife, case_ =>
+        rules.Add(new ShareRule(RelationType.Wife, inheritanceCase =>
         {
-            bool hasDescendants = case_.HasHeir(RelationType.Son) ||
-                                 case_.HasHeir(RelationType.Daughter) ||
-                                 case_.HasHeir(RelationType.SonOfSon) ||
-                                 case_.HasHeir(RelationType.DaughterOfSon);
+            bool hasDescendants = inheritanceCase.HasHeir(RelationType.Son) ||
+                                 inheritanceCase.HasHeir(RelationType.Daughter) ||
+                                 inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                                 inheritanceCase.HasHeir(RelationType.DaughterOfSon);
             
             var fractionPerWife = hasDescendants ? new Fraction(1, 8) : new Fraction(1, 4);
             
@@ -63,10 +63,10 @@ public class ShareRuleEngine
         // Handled in residuary distribution
 
         // Daughter: 1/2 (alone), 2/3 (2+), or 2:1 ratio with son
-        _rules.Add(new ShareRule(RelationType.Daughter, case_ =>
+        rules.Add(new ShareRule(RelationType.Daughter, inheritanceCase =>
         {
-            int daughterCount = case_.GetHeirCount(RelationType.Daughter);
-            int sonCount = case_.GetHeirCount(RelationType.Son);
+            int daughterCount = inheritanceCase.GetHeirCount(RelationType.Daughter);
+            int sonCount = inheritanceCase.GetHeirCount(RelationType.Son);
 
             if (sonCount > 0)
             {
@@ -84,12 +84,12 @@ public class ShareRuleEngine
         }));
 
         // Father: 1/6 or 1/6 + residue or residue
-        _rules.Add(new ShareRule(RelationType.Father, case_ =>
+        rules.Add(new ShareRule(RelationType.Father, inheritanceCase =>
         {
-            bool hasDescendants = case_.HasHeir(RelationType.Son) ||
-                                 case_.HasHeir(RelationType.Daughter) ||
-                                 case_.HasHeir(RelationType.SonOfSon) ||
-                                 case_.HasHeir(RelationType.DaughterOfSon);
+            bool hasDescendants = inheritanceCase.HasHeir(RelationType.Son) ||
+                                 inheritanceCase.HasHeir(RelationType.Daughter) ||
+                                 inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                                 inheritanceCase.HasHeir(RelationType.DaughterOfSon);
 
             if (hasDescendants)
                 return new Fraction(1, 6);
@@ -99,25 +99,25 @@ public class ShareRuleEngine
         }));
 
         // Mother: 1/6 or 1/3
-        _rules.Add(new ShareRule(RelationType.Mother, case_ =>
+        rules.Add(new ShareRule(RelationType.Mother, inheritanceCase =>
         {
-            bool hasDescendants = case_.HasHeir(RelationType.Son) ||
-                                 case_.HasHeir(RelationType.Daughter) ||
-                                 case_.HasHeir(RelationType.SonOfSon) ||
-                                 case_.HasHeir(RelationType.DaughterOfSon);
+            bool hasDescendants = inheritanceCase.HasHeir(RelationType.Son) ||
+                                 inheritanceCase.HasHeir(RelationType.Daughter) ||
+                                 inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                                 inheritanceCase.HasHeir(RelationType.DaughterOfSon);
 
-            bool hasSiblings = case_.GetHeirCount(RelationType.FullBrother) > 0 ||
-                             case_.GetHeirCount(RelationType.FullSister) > 0 ||
-                             case_.GetHeirCount(RelationType.ConsanguineBrother) > 0 ||
-                             case_.GetHeirCount(RelationType.ConsanguineSister) > 0 ||
-                             case_.GetHeirCount(RelationType.UterineBrother) > 0 ||
-                             case_.GetHeirCount(RelationType.UterineSister) > 0;
+            bool hasSiblings = inheritanceCase.GetHeirCount(RelationType.FullBrother) > 0 ||
+                             inheritanceCase.GetHeirCount(RelationType.FullSister) > 0 ||
+                             inheritanceCase.GetHeirCount(RelationType.ConsanguineBrother) > 0 ||
+                             inheritanceCase.GetHeirCount(RelationType.ConsanguineSister) > 0 ||
+                             inheritanceCase.GetHeirCount(RelationType.UterineBrother) > 0 ||
+                             inheritanceCase.GetHeirCount(RelationType.UterineSister) > 0;
 
             if (hasDescendants || hasSiblings)
                 return new Fraction(1, 6);
 
             // No descendants or siblings
-            bool hasHusband = case_.HasHeir(RelationType.Husband);
+            bool hasHusband = inheritanceCase.HasHeir(RelationType.Husband);
             if (!hasHusband)
                 return new Fraction(1, 3);
 
@@ -126,12 +126,12 @@ public class ShareRuleEngine
         }));
 
         // Grandfather: 1/6 or 1/6 + residue or residue
-        _rules.Add(new ShareRule(RelationType.Grandfather, case_ =>
+        rules.Add(new ShareRule(RelationType.Grandfather, inheritanceCase =>
         {
-            bool hasDescendants = case_.HasHeir(RelationType.Son) ||
-                                 case_.HasHeir(RelationType.Daughter) ||
-                                 case_.HasHeir(RelationType.SonOfSon) ||
-                                 case_.HasHeir(RelationType.DaughterOfSon);
+            bool hasDescendants = inheritanceCase.HasHeir(RelationType.Son) ||
+                                 inheritanceCase.HasHeir(RelationType.Daughter) ||
+                                 inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                                 inheritanceCase.HasHeir(RelationType.DaughterOfSon);
 
             if (hasDescendants)
                 return new Fraction(1, 6);
@@ -140,17 +140,17 @@ public class ShareRuleEngine
         }));
 
         // Grandmother (maternal & paternal): 1/6
-        _rules.Add(new ShareRule(RelationType.GrandmotherMaternal, case_ =>
+        rules.Add(new ShareRule(RelationType.GrandmotherMaternal, inheritanceCase =>
             new Fraction(1, 6)));
 
-        _rules.Add(new ShareRule(RelationType.GrandmotherPaternal, case_ =>
+        rules.Add(new ShareRule(RelationType.GrandmotherPaternal, inheritanceCase =>
             new Fraction(1, 6)));
 
         // Uterine Brother: 1/6 (alone) or 1/3 (2+)
-        _rules.Add(new ShareRule(RelationType.UterineBrother, case_ =>
+        rules.Add(new ShareRule(RelationType.UterineBrother, inheritanceCase =>
         {
-            int utBrotherCount = case_.GetHeirCount(RelationType.UterineBrother);
-            int utSisterCount = case_.GetHeirCount(RelationType.UterineSister);
+            int utBrotherCount = inheritanceCase.GetHeirCount(RelationType.UterineBrother);
+            int utSisterCount = inheritanceCase.GetHeirCount(RelationType.UterineSister);
             int totalUterine = utBrotherCount + utSisterCount;
 
             if (totalUterine == 0)
@@ -163,10 +163,10 @@ public class ShareRuleEngine
         }));
 
         // Uterine Sister: 1/6 (alone) or 1/3 (2+, divided equally)
-        _rules.Add(new ShareRule(RelationType.UterineSister, case_ =>
+        rules.Add(new ShareRule(RelationType.UterineSister, inheritanceCase =>
         {
-            int utBrotherCount = case_.GetHeirCount(RelationType.UterineBrother);
-            int utSisterCount = case_.GetHeirCount(RelationType.UterineSister);
+            int utBrotherCount = inheritanceCase.GetHeirCount(RelationType.UterineBrother);
+            int utSisterCount = inheritanceCase.GetHeirCount(RelationType.UterineSister);
             int totalUterine = utBrotherCount + utSisterCount;
 
             if (totalUterine == 0)
@@ -179,10 +179,10 @@ public class ShareRuleEngine
         }));
 
         // Daughter of Son: 1/2 (alone), 2/3 (2+), or 2:1 ratio with son of son
-        _rules.Add(new ShareRule(RelationType.DaughterOfSon, case_ =>
+        rules.Add(new ShareRule(RelationType.DaughterOfSon, inheritanceCase =>
         {
-            int dosSisterCount = case_.GetHeirCount(RelationType.DaughterOfSon);
-            int dosBrotherCount = case_.GetHeirCount(RelationType.SonOfSon);
+            int dosSisterCount = inheritanceCase.GetHeirCount(RelationType.DaughterOfSon);
+            int dosBrotherCount = inheritanceCase.GetHeirCount(RelationType.SonOfSon);
 
             if (dosSisterCount == 0)
                 return new Fraction(0, 1);
@@ -203,11 +203,11 @@ public class ShareRuleEngine
         }));
 
         // Full Sister: 1/2 (alone), 2/3 (2+), 1/6 (with daughter), or 2:1 ratio with brother
-        _rules.Add(new ShareRule(RelationType.FullSister, case_ =>
+        rules.Add(new ShareRule(RelationType.FullSister, inheritanceCase =>
         {
-            int sisterCount = case_.GetHeirCount(RelationType.FullSister);
-            int brotherCount = case_.GetHeirCount(RelationType.FullBrother);
-            bool hasDaughter = case_.HasHeir(RelationType.Daughter);
+            int sisterCount = inheritanceCase.GetHeirCount(RelationType.FullSister);
+            int brotherCount = inheritanceCase.GetHeirCount(RelationType.FullBrother);
+            bool hasDaughter = inheritanceCase.HasHeir(RelationType.Daughter);
 
             if (sisterCount == 0)
                 return new Fraction(0, 1);
@@ -231,11 +231,11 @@ public class ShareRuleEngine
         }));
 
         // Consanguine Sister: 1/2 (alone), 2/3 (2+), or 2:1 ratio with brother
-        _rules.Add(new ShareRule(RelationType.ConsanguineSister, case_ =>
+        rules.Add(new ShareRule(RelationType.ConsanguineSister, inheritanceCase =>
         {
-            int sisterCount = case_.GetHeirCount(RelationType.ConsanguineSister);
-            int brotherCount = case_.GetHeirCount(RelationType.ConsanguineBrother);
-            bool hasFullSister = case_.HasHeir(RelationType.FullSister);
+            int sisterCount = inheritanceCase.GetHeirCount(RelationType.ConsanguineSister);
+            int brotherCount = inheritanceCase.GetHeirCount(RelationType.ConsanguineBrother);
+            bool hasFullSister = inheritanceCase.HasHeir(RelationType.FullSister);
 
             if (sisterCount == 0 || hasFullSister)
                 return new Fraction(0, 1);
@@ -262,23 +262,23 @@ public class ShareRuleEngine
     /// <summary>
     /// Gets the share for a specific heir based on the case.
     /// </summary>
-    public Fraction GetShare(RelationType heirType, InheritanceCase case_)
+    public Fraction GetShare(RelationType heirType, InheritanceCase inheritanceCase)
     {
-        var rule = _rules.FirstOrDefault(r => r.Heir == heirType);
+        var rule = rules.FirstOrDefault(r => r.Heir == heirType);
         
         if (rule == null)
             return new Fraction(0, 1);
 
-        return rule.Rule(case_);
+        return rule.Rule(inheritanceCase);
     }
 
     /// <summary>
     /// Gets all applicable share rules for the given case.
     /// </summary>
-    public List<ShareRule> GetApplicableRules(InheritanceCase case_)
+    public List<ShareRule> GetApplicableRules(InheritanceCase inheritanceCase)
     {
-        return _rules
-            .Where(r => case_.HasHeir(r.Heir))
+        return rules
+            .Where(r => inheritanceCase.HasHeir(r.Heir))
             .ToList();
     }
 }
