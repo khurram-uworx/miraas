@@ -96,16 +96,16 @@ public class BlockingRuleEngine
     /// <summary>
     /// Applies complex blocking rules that depend on multiple conditions.
     /// </summary>
-    void applyComplexBlockingRules(InheritanceCase case_, HashSet<RelationType> blocked)
+    void applyComplexBlockingRules(InheritanceCase inheritanceCase, HashSet<RelationType> blocked)
     {
         // If daughter exists (no son), daughter blocks daughter of son
-        if (case_.HasHeir(RelationType.Daughter) && !case_.HasHeir(RelationType.Son))
+        if (inheritanceCase.HasHeir(RelationType.Daughter) && !inheritanceCase.HasHeir(RelationType.Son))
         {
             blocked.Add(RelationType.DaughterOfSon);
         }
 
         // Daughter of son blocks uterine siblings in certain contexts
-        if (case_.HasHeir(RelationType.DaughterOfSon) && !case_.HasHeir(RelationType.Son))
+        if (inheritanceCase.HasHeir(RelationType.DaughterOfSon) && !inheritanceCase.HasHeir(RelationType.Son))
         {
             blocked.Add(RelationType.UterineBrother);
             blocked.Add(RelationType.UterineSister);
@@ -115,9 +115,9 @@ public class BlockingRuleEngine
         // (complex - would need more detail)
 
         // If grandchildren exist, grandparents are blocked
-        bool hasGrandchildren = case_.HasHeir(RelationType.SonOfSon) ||
-                               case_.HasHeir(RelationType.DaughterOfSon);
-        if (hasGrandchildren && case_.HasHeir(RelationType.Father))
+        bool hasGrandchildren = inheritanceCase.HasHeir(RelationType.SonOfSon) ||
+                               inheritanceCase.HasHeir(RelationType.DaughterOfSon);
+        if (hasGrandchildren && inheritanceCase.HasHeir(RelationType.Father))
         {
             // Father takes precedence, grandparents are blocked
             blocked.Add(RelationType.Grandfather);
@@ -129,20 +129,20 @@ public class BlockingRuleEngine
     /// <summary>
     /// Applies blocking rules to determine blocked heirs.
     /// </summary>
-    public List<RelationType> GetBlockedHeirs(InheritanceCase case_)
+    public List<RelationType> GetBlockedHeirs(InheritanceCase inheritanceCase)
     {
         var blocked = new HashSet<RelationType>();
 
         foreach (var rule in rules)
         {
-            if (case_.HasHeir(rule.Blocker))
+            if (inheritanceCase.HasHeir(rule.Blocker))
             {
                 blocked.Add(rule.Blocked);
             }
         }
 
         // Additional complex blocking logic
-        applyComplexBlockingRules(case_, blocked);
+        applyComplexBlockingRules(inheritanceCase, blocked);
 
         return blocked.ToList();
     }
@@ -150,8 +150,8 @@ public class BlockingRuleEngine
     /// <summary>
     /// Checks if a specific heir is blocked.
     /// </summary>
-    public bool IsBlocked(RelationType heirType, InheritanceCase case_)
+    public bool IsBlocked(RelationType heirType, InheritanceCase inheritanceCase)
     {
-        return GetBlockedHeirs(case_).Contains(heirType);
+        return GetBlockedHeirs(inheritanceCase).Contains(heirType);
     }
 }

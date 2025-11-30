@@ -1,0 +1,425 @@
+@page "/calculator"
+@using MiraasWeb.Views.Home
+@model IndexModel
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="mb-4">Islamic Inheritance Calculator</h1>
+            
+            <!-- Calculator Form -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    
+                    <!-- Deceased Gender Selection -->
+                    <div class="mb-4">
+                        <h5 class="card-title">Deceased Gender</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="deceasedGender" id="genderMale" 
+                                   value="0" checked onchange="resetHeirs()">
+                            <label class="form-check-label" for="genderMale">Male</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="deceasedGender" id="genderFemale" 
+                                   value="1" onchange="resetHeirs()">
+                            <label class="form-check-label" for="genderFemale">Female</label>
+                        </div>
+                    </div>
+
+                    <!-- Estate Value (Optional) -->
+                    <div class="mb-4">
+                        <label for="estateValue" class="form-label">Estate Value (Optional)</label>
+                        <input type="number" class="form-control" id="estateValue" placeholder="Enter estate value" 
+                               min="0" step="0.01">
+                        <small class="form-text text-muted">Leave blank for fractional calculations only</small>
+                    </div>
+
+                    <hr>
+
+                    <!-- Heirs Selection -->
+                    <h5 class="mb-3">Select Heirs</h5>
+
+                    <!-- Spouses -->
+                    <div class="mb-3">
+                        <h6>Spouses</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Husband</span>
+                                    <input type="number" class="form-control" id="husbandCount" value="0" min="0" max="1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Wife(s)</span>
+                                    <input type="number" class="form-control" id="wifeCount" value="0" min="0" max="4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct Descendants -->
+                    <div class="mb-3">
+                        <h6>Direct Descendants</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Son(s)</span>
+                                    <input type="number" class="form-control" id="sonCount" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Daughter(s)</span>
+                                    <input type="number" class="form-control" id="daughterCount" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grandchildren -->
+                    <div class="mb-3">
+                        <h6>Grandchildren (Son of Son)</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Grandson(s)</span>
+                                    <input type="number" class="form-control" id="sonOfSonCount" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Granddaughter(s)</span>
+                                    <input type="number" class="form-control" id="daughterOfSonCount" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parents -->
+                    <div class="mb-3">
+                        <h6>Parents</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="fatherCheck">
+                                    <label class="form-check-label" for="fatherCheck">Father</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="motherCheck">
+                                    <label class="form-check-label" for="motherCheck">Mother</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grandparents -->
+                    <div class="mb-3">
+                        <h6>Grandparents</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="grandfatherCheck">
+                                    <label class="form-check-label" for="grandfatherCheck">Grandfather</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="grandmotherMaternalCheck">
+                                    <label class="form-check-label" for="grandmotherMaternalCheck">Grandmother (Maternal)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="grandmotherPaternalCheck">
+                                    <label class="form-check-label" for="grandmotherPaternalCheck">Grandmother (Paternal)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Siblings -->
+                    <div class="mb-3">
+                        <h6>Full Siblings</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Full Brother(s)</span>
+                                    <input type="number" class="form-control" id="fullBrotherCount" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Full Sister(s)</span>
+                                    <input type="number" class="form-control" id="fullSisterCount" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consanguine Siblings -->
+                    <div class="mb-3">
+                        <h6>Consanguine Siblings (Same Father, Different Mother)</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Consanguine Brother(s)</span>
+                                    <input type="number" class="form-control" id="consanguineBrotherCount" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Consanguine Sister(s)</span>
+                                    <input type="number" class="form-control" id="consanguineSisterCount" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uterine Siblings -->
+                    <div class="mb-3">
+                        <h6>Uterine Siblings (Same Mother, Different Father)</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Uterine Brother(s)</span>
+                                    <input type="number" class="form-control" id="uterineBrotherCount" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Uterine Sister(s)</span>
+                                    <input type="number" class="form-control" id="uterineSisterCount" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Calculate Button -->
+                    <button class="btn btn-primary btn-lg w-100" onclick="calculateInheritance()">
+                        Calculate Shares
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="d-none">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Inheritance Calculation Results</h5>
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- Error Message -->
+                        <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
+
+                        <!-- Warnings -->
+                        <div id="warningsSection" class="d-none mb-3">
+                            <div class="alert alert-warning" role="alert">
+                                <strong>?? Warnings:</strong>
+                                <ul id="warningsList" class="mb-0 mt-2"></ul>
+                            </div>
+                        </div>
+
+                        <!-- Results Table -->
+                        <div class="table-responsive" id="resultsTable"></div>
+
+                        <!-- Totals -->
+                        <div class="row mt-4 pt-3 border-top">
+                            <div class="col-md-4">
+                                <h6>Total Fraction</h6>
+                                <p class="lead" id="totalFraction">1/1</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Total Percentage</h6>
+                                <p class="lead" id="totalPercentage">100%</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6>Scholarly Review</h6>
+                                <p id="scholarlyReview" class="lead text-info">-</p>
+                            </div>
+                        </div>
+
+                        <!-- Scholarly Review Alert -->
+                        <div id="scholarlyReviewAlert" class="alert alert-info d-none mt-3" role="alert">
+                            <strong>?? Note:</strong> This calculation may require scholarly review. 
+                            This could indicate special scenarios (Awl or Radd) that require expert intervention.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function calculateInheritance() {
+            // Build request object
+            const request = {
+                deceasedGender: parseInt(document.querySelector('input[name="deceasedGender"]:checked').value),
+                estateValue: parseFloat(document.getElementById('estateValue').value) || null,
+                heirs: {}
+            };
+
+            // Add count-based heirs
+            const countHeirs = [
+                { id: 'wifeCount', name: 'Wife' },
+                { id: 'sonCount', name: 'Son' },
+                { id: 'daughterCount', name: 'Daughter' },
+                { id: 'husbandCount', name: 'Husband' },
+                { id: 'fullBrotherCount', name: 'FullBrother' },
+                { id: 'fullSisterCount', name: 'FullSister' },
+                { id: 'consanguineBrotherCount', name: 'ConsanguineBrother' },
+                { id: 'consanguineSisterCount', name: 'ConsanguineSister' },
+                { id: 'uterineBrotherCount', name: 'UterineBrother' },
+                { id: 'uterineSisterCount', name: 'UterineSister' },
+                { id: 'sonOfSonCount', name: 'SonOfSon' },
+                { id: 'daughterOfSonCount', name: 'DaughterOfSon' }
+            ];
+
+            countHeirs.forEach(heir => {
+                const count = parseInt(document.getElementById(heir.id).value) || 0;
+                if (count > 0) {
+                    request.heirs[heir.name] = count;
+                }
+            });
+
+            // Add checkbox-based heirs
+            const checkHeirs = [
+                { id: 'fatherCheck', name: 'Father' },
+                { id: 'motherCheck', name: 'Mother' },
+                { id: 'grandfatherCheck', name: 'Grandfather' },
+                { id: 'grandmotherMaternalCheck', name: 'GrandmotherMaternal' },
+                { id: 'grandmotherPaternalCheck', name: 'GrandmotherPaternal' }
+            ];
+
+            checkHeirs.forEach(heir => {
+                if (document.getElementById(heir.id).checked) {
+                    request.heirs[heir.name] = 1;
+                }
+            });
+
+            // Validate that at least one heir is selected
+            if (Object.keys(request.heirs).length === 0) {
+                showError('Please select at least one heir.');
+                return;
+            }
+
+            // Send calculation request
+            $.ajax({
+                url: '/api/calculation/calculate',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(request),
+                success: function(response) {
+                    displayResults(response);
+                },
+                error: function(xhr, status, error) {
+                    showError('Error communicating with server: ' + error);
+                }
+            });
+        }
+
+        function displayResults(response) {
+            const resultsSection = document.getElementById('resultsSection');
+            const errorAlert = document.getElementById('errorAlert');
+            const warningsSection = document.getElementById('warningsSection');
+            const warningsList = document.getElementById('warningsList');
+            const resultsTable = document.getElementById('resultsTable');
+            const totalFraction = document.getElementById('totalFraction');
+            const totalPercentage = document.getElementById('totalPercentage');
+            const scholarlyReview = document.getElementById('scholarlyReview');
+            const scholarlyReviewAlert = document.getElementById('scholarlyReviewAlert');
+
+            // Clear previous results
+            errorAlert.classList.add('d-none');
+            warningsSection.classList.add('d-none');
+
+            // Check for errors
+            if (!response.success) {
+                errorAlert.textContent = response.errorMessage || 'An error occurred during calculation.';
+                errorAlert.classList.remove('d-none');
+                resultsSection.classList.remove('d-none');
+                return;
+            }
+
+            // Build results table
+            let tableHtml = '<table class="table table-sm"><thead><tr>' +
+                '<th>Heir</th><th>Count</th><th>Fraction</th><th>Percentage</th>';
+            
+            const estateValue = parseFloat(document.getElementById('estateValue').value);
+            if (estateValue > 0) {
+                tableHtml += '<th>Amount</th>';
+            }
+            
+            tableHtml += '<th>Explanation</th></tr></thead><tbody>';
+
+            response.shares.forEach(share => {
+                tableHtml += `<tr>
+                    <td>${share.relation}</td>
+                    <td>${share.count}</td>
+                    <td>${share.fraction}</td>
+                    <td>${share.percentage.toFixed(2)}%</td>`;
+                
+                if (estateValue > 0) {
+                    const amount = share.amount ? share.amount.toFixed(2) : '0.00';
+                    tableHtml += `<td>${amount}</td>`;
+                }
+                
+                tableHtml += `<td>${share.explanation}</td></tr>`;
+            });
+
+            tableHtml += '</tbody></table>';
+            resultsTable.innerHTML = tableHtml;
+
+            // Display totals
+            totalFraction.textContent = response.totalFraction;
+            totalPercentage.textContent = response.totalPercentage.toFixed(2) + '%';
+
+            // Display warnings
+            if (response.warnings && response.warnings.length > 0) {
+                warningsList.innerHTML = '';
+                response.warnings.forEach(warning => {
+                    const li = document.createElement('li');
+                    li.textContent = warning;
+                    warningsList.appendChild(li);
+                });
+                warningsSection.classList.remove('d-none');
+            }
+
+            // Display scholarly review note
+            if (response.requiresScholarlyReview) {
+                scholarlyReview.textContent = 'Required ??';
+                scholarlyReview.className = 'lead text-warning';
+                scholarlyReviewAlert.classList.remove('d-none');
+            } else {
+                scholarlyReview.textContent = 'Not Required ?';
+                scholarlyReview.className = 'lead text-success';
+                scholarlyReviewAlert.classList.add('d-none');
+            }
+
+            resultsSection.classList.remove('d-none');
+            resultsTable.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            errorAlert.textContent = message;
+            errorAlert.classList.remove('d-none');
+            document.getElementById('resultsSection').classList.remove('d-none');
+        }
+
+        function resetHeirs() {
+            // Clear all heir selections when gender changes
+            document.getElementById('estateValue').value = '';
+            document.querySelectorAll('input[type="number"]').forEach(input => input.value = '0');
+            document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+        }
+    </script>
+}

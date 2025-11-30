@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MiraasWeb.Models;
+using MiraasWeb.Views.Home;
 
 namespace MiraasWeb.Controllers
 {
@@ -14,6 +14,12 @@ namespace MiraasWeb.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Calculator()
+        {
+            this.ViewData["Title"] = "Islamic Inheritance Calculator";
+            return View(new IndexModel());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
