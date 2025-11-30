@@ -412,7 +412,7 @@ public class BlockingRuleTests
     }
 
     [Test]
-    public void GetBlockedHeirs_FullSisterPresent_ConsanguineBrotherBlocked()
+    public void GetBlockedHeirs_FullSisterPresent_ConsanguineBrotherNotBlocked()
     {
         var deceased = new DeceasedPerson(Gender.Male);
         var inheritanceCase = new InheritanceCase(deceased);
@@ -421,11 +421,11 @@ public class BlockingRuleTests
 
         var blocked = engine.GetBlockedHeirs(inheritanceCase);
 
-        Assert.That(blocked, Does.Contain(RelationType.ConsanguineBrother));
+        Assert.That(blocked, Does.Not.Contain(RelationType.ConsanguineBrother));
     }
 
     [Test]
-    public void GetBlockedHeirs_FullSisterPresent_ConsanguineSisterBlocked()
+    public void GetBlockedHeirs_FullSisterPresent_ConsanguineSisterNotBlocked()
     {
         var deceased = new DeceasedPerson(Gender.Male);
         var inheritanceCase = new InheritanceCase(deceased);
@@ -434,7 +434,7 @@ public class BlockingRuleTests
 
         var blocked = engine.GetBlockedHeirs(inheritanceCase);
 
-        Assert.That(blocked, Does.Contain(RelationType.ConsanguineSister));
+        Assert.That(blocked, Does.Not.Contain(RelationType.ConsanguineSister));
     }
 
     #endregion
@@ -502,7 +502,7 @@ public class BlockingRuleTests
     #region SonOfSon Blocks DaughterOfSon
 
     [Test]
-    public void GetBlockedHeirs_SonOfSonPresent_DaughterOfSonBlocked()
+    public void GetBlockedHeirs_SonOfSonPresent_DaughterOfSonNotBlocked()
     {
         var deceased = new DeceasedPerson(Gender.Male);
         var inheritanceCase = new InheritanceCase(deceased);
@@ -511,7 +511,7 @@ public class BlockingRuleTests
 
         var blocked = engine.GetBlockedHeirs(inheritanceCase);
 
-        Assert.That(blocked, Does.Contain(RelationType.DaughterOfSon));
+        Assert.That(blocked, Does.Not.Contain(RelationType.DaughterOfSon));
     }
 
     #endregion
