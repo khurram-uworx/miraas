@@ -26,6 +26,8 @@ public class InheritanceValidator
     void validateWives(InheritanceCase inheritanceCase, List<string> errors)
     {
         int wifeCount = inheritanceCase.GetHeirCount(RelationType.Wife);
+        if (wifeCount > 0 && inheritanceCase.Deceased.Gender != Gender.Male)
+            errors.Add($"Deceased must be male to have wives. Found: {wifeCount} wives.");
         if (wifeCount > 4)
             errors.Add($"Cannot have more than 4 wives. Found: {wifeCount}");
     }
@@ -36,6 +38,8 @@ public class InheritanceValidator
     void validateHusband(InheritanceCase inheritanceCase, List<string> errors)
     {
         int husbandCount = inheritanceCase.GetHeirCount(RelationType.Husband);
+        if (husbandCount > 0 && inheritanceCase.Deceased.Gender != Gender.Female)
+            errors.Add($"Deceased must be female to have husband.");
         if (husbandCount > 1)
             errors.Add($"Cannot have more than 1 husband. Found: {husbandCount}");
     }
@@ -45,8 +49,15 @@ public class InheritanceValidator
     /// </summary>
     void validateAscendants(InheritanceCase inheritanceCase, List<string> errors)
     {
-        // Note: Basic validation for now.
-        // Additional rules can be added as needed.
+        int fatherCount = inheritanceCase.GetHeirCount(RelationType.Father);
+        int motherCount = inheritanceCase.GetHeirCount(RelationType.Mother);
+        int grandFatherCount = inheritanceCase.GetHeirCount(RelationType.Grandfather);
+        if (fatherCount > 1)
+            errors.Add($"Cannot have multiple fathers. Found: {fatherCount}");
+        if (motherCount > 1)
+            errors.Add($"Cannot have multiple mothers. Found: {motherCount}");
+        if (grandFatherCount > 1)
+            errors.Add($"Cannot have multiple grand fathers. Found: {grandFatherCount}");
     }
 
     /// <summary>

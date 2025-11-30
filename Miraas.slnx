@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".github/copilot-instructions.md" />
     <File Path=".github/workflows/deploy.yml" />
+    <File Path=".github/workflows/integration.yml" />
     <File Path="DOMAIN.md" />
     <File Path="LICENSE.txt" />
     <File Path="OVERVIEW.md" />

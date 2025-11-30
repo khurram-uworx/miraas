@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MiraasWeb.Models;
 using MiraasWeb.Views.Home;
+using System.Diagnostics;
 
 namespace MiraasWeb.Controllers
 {

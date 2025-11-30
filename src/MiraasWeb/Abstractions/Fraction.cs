@@ -1,4 +1,4 @@
-namespace MiraasWeb.Domain;
+namespace MiraasWeb.Abstractions;
 
 /// <summary>
 /// Represents a rational number (fraction) for precise inheritance calculations.

@@ -1,3 +1,5 @@
+using MiraasWeb.Abstractions;
+
 namespace MiraasWeb.Domain;
 
 /// <summary>
