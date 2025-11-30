@@ -1,4 +1,4 @@
-namespace MiraasWeb.Domain.Dtos;
+namespace MiraasWeb.Controllers;
 
 /// <summary>
 /// DTO representing a single heir's calculated share.

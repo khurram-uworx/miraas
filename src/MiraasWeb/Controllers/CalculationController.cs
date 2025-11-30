@@ -1,7 +1,6 @@
 namespace MiraasWeb.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using MiraasWeb.Domain.Dtos;
 using MiraasWeb.Services;
 
 /// <summary>

@@ -1,4 +1,4 @@
-namespace MiraasWeb.Domain.Dtos;
+namespace MiraasWeb.Controllers;
 
 /// <summary>
 /// Response DTO for inheritance calculation API.

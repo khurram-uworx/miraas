@@ -1,7 +1,7 @@
 namespace MiraasWeb.Services;
 
+using MiraasWeb.Controllers;
 using MiraasWeb.Domain;
-using MiraasWeb.Domain.Dtos;
 
 /// <summary>
 /// Service that orchestrates Islamic inheritance calculations.
