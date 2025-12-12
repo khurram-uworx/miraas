@@ -1,13 +1,12 @@
-namespace MiraasWeb.Views.Home;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using MiraasWeb.Models;
+namespace MiraasWeb.Models;
 
 /// <summary>
 /// Razor Page code-behind for the Islamic Inheritance Calculator.
 /// Handles page initialization and model binding.
 /// </summary>
-public class IndexModel : PageModel
+public class IndexViewModel : PageModel
 {
     public CalculatorViewModel Calculator { get; set; } = new();
 

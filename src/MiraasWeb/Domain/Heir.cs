@@ -1,44 +1,119 @@
+using MiraasWeb.Abstractions;
+
 namespace MiraasWeb.Domain;
 
-/// <summary>
-/// Base class for all heirs in Islamic inheritance.
-/// </summary>
+public enum RelationType
+{
+    // Direct Descendants
+    Son, Daughter, SonOfSon, DaughterOfSon,
+
+    // Ascendants
+    Father, Mother, Grandfather, GrandmotherMaternal, GrandmotherPaternal,
+
+    // Spouse
+    Husband, Wife,
+
+    // same father and mothe)
+    FullBrother, FullSister,
+
+    // same father, different mother
+    ConsanguineBrother, ConsanguineSister,
+
+    // same mother, different father
+    UterineBrother, UterineSister
+}
+
+public class ShareResult
+{
+    public Fraction Fraction { get; set; } = Fraction.Zero;
+    public decimal Percentage => Fraction.ToPercentage();
+    public decimal Amount { get; set; }
+    public string Explanation { get; set; } = string.Empty; // Citation etc
+    public bool IsBlocked { get; set; }
+
+    public ShareResult(Fraction fraction)
+    {
+        Fraction = fraction;
+    }
+
+    public ShareResult() { }
+
+    public override string ToString()
+    {
+        if (this.IsBlocked) return "Blocked";
+        if (this.Fraction == Fraction.Zero) return "Zero";
+
+        if (!string.IsNullOrEmpty(this.Explanation) && this.Amount > decimal.Zero)
+            return $"{this.Fraction} {this.Explanation} [{this.Amount}]";
+        else if (!string.IsNullOrEmpty(this.Explanation))
+            return $"{this.Fraction} {this.Explanation}";
+        else if (this.Amount > decimal.Zero)
+            return $"{this.Fraction} [{this.Amount}]";
+        else
+            return this.Fraction.ToString();
+    }
+}
+
+
+// public because of tests
 public abstract class Heir
 {
-    /// <summary>
-    /// The relationship type of this heir to the deceased.
-    /// </summary>
+    ShareResult shareResult = new();
+
     public abstract RelationType Relation { get; }
 
-    /// <summary>
-    /// The number of heirs of this type (e.g., 2 daughters).
-    /// </summary>
     public int Count { get; set; } = 1;
 
-    /// <summary>
-    /// The calculated share result for this heir.
-    /// </summary>
-    public ShareResult Result { get; set; } = new();
-
-    /// <summary>
-    /// Gets the category of this heir (FixedShare, Residuary, Both, Blocked).
-    /// </summary>
-    public abstract HeirCategory Category { get; }
+    public ShareResult Result => this.shareResult;
 
     protected Heir(int count = 1)
     {
         if (count < 1)
             throw new ArgumentException("Count must be at least 1.", nameof(count));
-        
+
         Count = count;
     }
+
+    public override string ToString() =>
+        this.shareResult.Fraction > Fraction.Zero
+        ? string.Join(Environment.NewLine,
+            this.Count > 0 ? $"Relation: {this.Relation} [{this.Count}]" : $"Relation: {this.Relation}",
+            $"Share: {this.shareResult}")
+        : this.Count > 0 ? $"Relation: {this.Relation} [{this.Count}]" : $"Relation: {this.Relation}";
+
+    public void AddShare(ShareResult value)
+    {
+        var oldResult = this.shareResult;
+        this.shareResult = value;
+
+        if (oldResult.Fraction.Numerator > 0)
+        {
+            this.shareResult.Amount += oldResult.Amount;
+            this.shareResult.Fraction += oldResult.Fraction;
+            if (!string.IsNullOrWhiteSpace(oldResult.Explanation)) this.shareResult.Explanation = $"{oldResult.Explanation}, {this.shareResult.Explanation}";
+        }
+    }
+
+    public string RelationTypeToString() =>
+        Relation switch
+        {
+            RelationType.FullSister => "Full Sister",
+            RelationType.FullBrother => "Full Brother",
+            RelationType.ConsanguineBrother => "Consanguine Brother",
+            RelationType.ConsanguineSister => "Consanguine Sister",
+            RelationType.UterineBrother => "Uterine Brother",
+            RelationType.UterineSister => "Uterine Sister",
+            RelationType.GrandmotherPaternal => "Grandmother (Paternal)",
+            RelationType.GrandmotherMaternal => "Grandmother (Maternal)",
+
+            _ => Relation.ToString()
+        };
 }
 
 // Direct Descendants
 public class Son : Heir
 {
     public override RelationType Relation => RelationType.Son;
-    public override HeirCategory Category => HeirCategory.Residuary;
 
     public Son(int count = 1) : base(count) { }
 }
@@ -46,7 +121,6 @@ public class Son : Heir
 public class Daughter : Heir
 {
     public override RelationType Relation => RelationType.Daughter;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public Daughter(int count = 1) : base(count) { }
 }
@@ -54,7 +128,6 @@ public class Daughter : Heir
 public class SonOfSon : Heir
 {
     public override RelationType Relation => RelationType.SonOfSon;
-    public override HeirCategory Category => HeirCategory.Residuary;
 
     public SonOfSon(int count = 1) : base(count) { }
 }
@@ -62,7 +135,6 @@ public class SonOfSon : Heir
 public class DaughterOfSon : Heir
 {
     public override RelationType Relation => RelationType.DaughterOfSon;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public DaughterOfSon(int count = 1) : base(count) { }
 }
@@ -71,7 +143,6 @@ public class DaughterOfSon : Heir
 public class Father : Heir
 {
     public override RelationType Relation => RelationType.Father;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public Father() : base(1) { }
 }
@@ -79,7 +150,6 @@ public class Father : Heir
 public class Mother : Heir
 {
     public override RelationType Relation => RelationType.Mother;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public Mother() : base(1) { }
 }
@@ -87,7 +157,6 @@ public class Mother : Heir
 public class Grandfather : Heir
 {
     public override RelationType Relation => RelationType.Grandfather;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public Grandfather() : base(1) { }
 }
@@ -95,7 +164,6 @@ public class Grandfather : Heir
 public class GrandmotherMaternal : Heir
 {
     public override RelationType Relation => RelationType.GrandmotherMaternal;
-    public override HeirCategory Category => HeirCategory.FixedShare;
 
     public GrandmotherMaternal() : base(1) { }
 }
@@ -103,7 +171,6 @@ public class GrandmotherMaternal : Heir
 public class GrandmotherPaternal : Heir
 {
     public override RelationType Relation => RelationType.GrandmotherPaternal;
-    public override HeirCategory Category => HeirCategory.FixedShare;
 
     public GrandmotherPaternal() : base(1) { }
 }
@@ -112,15 +179,13 @@ public class GrandmotherPaternal : Heir
 public class Husband : Heir
 {
     public override RelationType Relation => RelationType.Husband;
-    public override HeirCategory Category => HeirCategory.Both;
 
-    public Husband() : base(1) { }
+    public Husband(int count = 1) : base(count) { }
 }
 
 public class Wife : Heir
 {
     public override RelationType Relation => RelationType.Wife;
-    public override HeirCategory Category => HeirCategory.FixedShare;
 
     public Wife(int count = 1) : base(count) { }
 }
@@ -129,7 +194,6 @@ public class Wife : Heir
 public class FullBrother : Heir
 {
     public override RelationType Relation => RelationType.FullBrother;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public FullBrother(int count = 1) : base(count) { }
 }
@@ -137,16 +201,14 @@ public class FullBrother : Heir
 public class FullSister : Heir
 {
     public override RelationType Relation => RelationType.FullSister;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public FullSister(int count = 1) : base(count) { }
 }
 
-// Consanguine Siblings (same father, different mother)
+// same father, different mother
 public class ConsanguineBrother : Heir
 {
     public override RelationType Relation => RelationType.ConsanguineBrother;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public ConsanguineBrother(int count = 1) : base(count) { }
 }
@@ -154,16 +216,14 @@ public class ConsanguineBrother : Heir
 public class ConsanguineSister : Heir
 {
     public override RelationType Relation => RelationType.ConsanguineSister;
-    public override HeirCategory Category => HeirCategory.Both;
 
     public ConsanguineSister(int count = 1) : base(count) { }
 }
 
-// Uterine Siblings (same mother, different father)
+// same mother, different father
 public class UterineBrother : Heir
 {
     public override RelationType Relation => RelationType.UterineBrother;
-    public override HeirCategory Category => HeirCategory.FixedShare;
 
     public UterineBrother(int count = 1) : base(count) { }
 }
@@ -171,7 +231,6 @@ public class UterineBrother : Heir
 public class UterineSister : Heir
 {
     public override RelationType Relation => RelationType.UterineSister;
-    public override HeirCategory Category => HeirCategory.FixedShare;
 
     public UterineSister(int count = 1) : base(count) { }
 }

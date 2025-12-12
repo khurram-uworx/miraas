@@ -2,8 +2,6 @@ root = true
 
 [*.cs]
 
-file_header_template = Copyright (c) UWorx Services 2025. All Rights Reserved.\nThe information contained herein is proprietary and confidential.\nThis proprietary and confidential information, either in whole or in\npart, shall not be used for any purpose unless permitted by the terms\nof a valid license agreement.
-
 #### INDENTATION ####
 indent_style = space
 indent_size = 4

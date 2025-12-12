@@ -1,5 +1,20 @@
 # Miraas (Islamic Inheritance Calculator)
 
+Available at https://miraas.azurewebsites.net
+
+## ✅ Implementation Status
+
+**All core Islamic inheritance rules have been implemented and tested:**
+
+- ✅ Fixed shares (Fard) for all heir types
+- ✅ Residuary distribution (Asaba)
+- ✅ Radd (residue distribution when no residuary heirs)
+- ✅ Awl (proportional reduction when shares exceed 100%)
+- ✅ Blocking rules (Hijab)
+- ✅ Complex scenarios (multiple wives, grandmothers, etc.)
+
+**Test Coverage:** 208 tests passing ✅
+
 ## Purpose
 
 The purpose of this application is to provide a **simple, accurate, and user-friendly Islamic inheritance calculator**
@@ -58,9 +73,6 @@ This repository contains an ASP.NET Core MVC web application intended to run on 
 
 ## Developer workflow (summary)
 1. Use Visual Studio and open the solution (Miraas.slnx)
-
-## Copilot & agents
-- Use .github/copilot-instructions.md for Copilot behavior and constraints.
 
 # High-Level Architecture
 

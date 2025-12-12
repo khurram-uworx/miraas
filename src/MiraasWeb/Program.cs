@@ -1,10 +1,11 @@
+using MiraasWeb.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<CalculatorService>();
+builder.Services.AddTransient<IssueReportingService>();
 builder.Services.AddControllersWithViews();
-
-// Register application services
-builder.Services.AddScoped<MiraasWeb.Services.CalculatorService>();
 
 var app = builder.Build();
 

@@ -1,17 +1,17 @@
 namespace MiraasWeb.Domain;
 
-/// <summary>
-/// Represents the deceased person whose estate is being divided.
-/// </summary>
+public enum Gender { Male, Female }
+
+// public because of tests
 public class DeceasedPerson
 {
-    /// <summary>
-    /// The gender of the deceased (affects certain inheritance rules).
-    /// </summary>
     public Gender Gender { get; set; }
 
     public DeceasedPerson(Gender gender = Gender.Male)
     {
         Gender = gender;
     }
+
+    public override string ToString() =>
+        $"Deceased Person Gender: {Gender}";
 }

@@ -1,0 +1,29 @@
+ISSUE REPORT #0000
+================================
+Reported: 2025-12-10 22:45:00
+
+USER COMMENT:
+This is a sample issue report to demonstrate the format. The wife should have received 1/4 but got 1/8 instead.
+
+CALCULATION REQUEST DATA:
+================================
+Deceased Gender: Male
+Estate Value: $100,000.00
+
+HEIRS:
+- Wife: 1
+- Son: 2
+- Daughter: 1
+
+
+RAW JSON DATA:
+================================
+{
+  "DeceasedGender": 0,
+  "EstateValue": 100000,
+  "Heirs": {
+    "Wife": 1,
+    "Son": 2,
+    "Daughter": 1
+  }
+}
