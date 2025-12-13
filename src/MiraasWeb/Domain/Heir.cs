@@ -97,6 +97,8 @@ public abstract class Heir
     public string RelationTypeToString() =>
         Relation switch
         {
+            RelationType.DaughterOfSon => "Grand Son",
+            RelationType.SonOfSon => "Grand Daughter",
             RelationType.FullSister => "Full Sister",
             RelationType.FullBrother => "Full Brother",
             RelationType.ConsanguineBrother => "Consanguine Brother",

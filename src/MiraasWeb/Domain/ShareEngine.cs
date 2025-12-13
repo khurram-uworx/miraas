@@ -27,31 +27,17 @@ class ShareEngine
 {
     readonly List<ShareRule> rules;
 
-    static bool deceasedHasDescendants(InheritanceCase i) =>
-        i.HasHeir(RelationType.Son)
-        || i.HasHeir(RelationType.Daughter)
-        || i.HasHeir(RelationType.SonOfSon)
-        || i.HasHeir(RelationType.DaughterOfSon);
-
-    static bool deceasedHasSiblings(InheritanceCase i) =>
-        i.HasHeir(RelationType.FullBrother)
-        || i.HasHeir(RelationType.FullSister)
-        || i.HasHeir(RelationType.ConsanguineBrother)
-        || i.HasHeir(RelationType.ConsanguineSister)
-        || i.HasHeir(RelationType.UterineBrother)
-        || i.HasHeir(RelationType.UterineSister);
-
     public ShareEngine()
     {
         rules =
         [
             new ShareRule(RelationType.Husband, inheritanceCase =>
-            deceasedHasDescendants(inheritanceCase)
+            inheritanceCase.DeceasedHasDescendants()
             ? (Fraction.Quarter, "Husband: 1/4 of estate (with children)")
             : (Fraction.Half, "Husband: 1/2 of estate (no children)")),
 
             new ShareRule(RelationType.Wife, inheritanceCase =>
-            deceasedHasDescendants(inheritanceCase)
+            inheritanceCase.DeceasedHasDescendants()
             ? (Fraction.Eighth, "Wife: 1/8 of estate (with children)")
             : (Fraction.Quarter, "Wife: 1/4 of estate (no children)")),
 
@@ -77,17 +63,24 @@ class ShareEngine
             }),
 
             new ShareRule(RelationType.Father, inheritanceCase =>
-            deceasedHasDescendants(inheritanceCase)
+            inheritanceCase.DeceasedHasDescendants()
             ? (Fraction.Sixth, "Father: 1/6 of estate (with children)")
             : (Fraction.Zero, "Father: Residuary (remainder after fixed shares)")),
 
             new ShareRule(RelationType.Mother, inheritanceCase =>
-            deceasedHasDescendants(inheritanceCase) || deceasedHasSiblings(inheritanceCase)
-            ? (Fraction.Sixth, "Mother: 1/6 of estate (with children or siblings)")
-            : (Fraction.Third, "Mother: 1/3 of estate (no children or siblings)")),
+            {
+                if (inheritanceCase.DeceasedHasDescendants())
+                    return (Fraction.Sixth, "Mother: 1/6 of estate (with children or siblings)");
+                else if (inheritanceCase.DeceasedHasSiblings())
+                    return (Fraction.Sixth, "Mother: 1/6 of estate (with children or siblings)");
+                else if (!inheritanceCase.HasSpouse() && !inheritanceCase.HasHeir(RelationType.Father))
+                    return (Fraction.Third, "Mother: 1/3 of estate (no children or siblings)");
+                else
+                    return (Fraction.Zero, "Mother: 1/3 of residue (no children/sibling/spouse/father");
+            }),
 
             new ShareRule(RelationType.Grandfather, inheritanceCase =>
-            deceasedHasDescendants(inheritanceCase) ? Fraction.Sixth : Fraction.Zero),
+            inheritanceCase.DeceasedHasDescendants() ? Fraction.Sixth : Fraction.Zero),
 
             new ShareRule(RelationType.GrandmotherMaternal, inheritanceCase =>
             inheritanceCase.HasHeir(RelationType.GrandmotherPaternal) // grand mothers share 1/6
