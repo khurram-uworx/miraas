@@ -133,6 +133,24 @@ public class CalculationEngine
             {
                 // Residue if any (when fixed shares < 100%)
                 var residue = Fraction.One - totalFixed;
+
+                if (residue > Fraction.Zero
+                    && inheritanceCase.Heirs.FirstOrDefault(h => h.Relation == RelationType.Mother) is { } mother
+                    && !fixedShareHeirs.Exists(h => h.Relation == RelationType.Mother))
+                {
+                    // Mother exists but she hasnt got fixed share
+                    var share = residue * Fraction.Third;
+                    mother.AddShare(new ShareResult(share)
+                    {
+                        Explanation = "1/3 of residue"
+                    });
+
+                    fixedShareHeirs.Add(mother); // so she can participate in Radd
+
+                    residue -= share;
+                    totalFixed += share;
+                }
+
                 var residuaryRelations = ShareEngine.DetermineResiduaryGroup(inheritanceCase).ToList();
                 var residuaryHeirs = inheritanceCase.Heirs.Where(h => residuaryRelations.Contains(h.Relation)).ToList();
 

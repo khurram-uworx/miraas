@@ -117,6 +117,77 @@ public class CalculationAdvancedTests
     }
 
     [Test]
+    public void Calculate_FatherMotherAndDaughterOfSon_CorrectShares()
+    {
+        var deceased = new DeceasedPerson(Gender.Male);
+        var inheritanceCase = new InheritanceCase(deceased);
+        inheritanceCase.AddHeir(new Father());
+        inheritanceCase.AddHeir(new Mother());
+        inheritanceCase.AddHeir(new DaughterOfSon());
+
+        var result = engine.Calculate(inheritanceCase);
+        Assert.That(result.IsSuccessful, Is.True);
+
+        var granddaughter = result.Heirs.First(h => h.Relation == RelationType.DaughterOfSon);
+        var mother = result.Heirs.First(h => h.Relation == RelationType.Mother);
+        var father = result.Heirs.First(h => h.Relation == RelationType.Father);
+
+        Assert.That(granddaughter.Result.Fraction, Is.EqualTo(Fraction.Half), "Daughter of son should get 1/2");
+        Assert.That(mother.Result.Fraction, Is.EqualTo(Fraction.Sixth), "Mother should get 1/6");
+        Assert.That(father.Result.Fraction, Is.EqualTo(Fraction.Third), "Father should get 1/3 (1/6 fixed + residue)");
+        Assert.That(result.TotalFraction, Is.EqualTo(Fraction.One), "Total should equal 1");
+    }
+
+    [Test]
+    public void Calculate_WifeTwoDaughtersAndMother_RaddAllocatesExcludingSpouse()
+    {
+        var deceased = new DeceasedPerson(Gender.Male);
+        var inheritanceCase = new InheritanceCase(deceased);
+        inheritanceCase.AddHeir(new Wife());
+        inheritanceCase.AddHeir(new Daughter(2));
+        inheritanceCase.AddHeir(new Mother());
+
+        var result = engine.Calculate(inheritanceCase);
+        Assert.That(result.IsSuccessful, Is.True);
+
+        var wife = result.Heirs.First(h => h.Relation == RelationType.Wife);
+        var daughters = result.Heirs.First(h => h.Relation == RelationType.Daughter);
+        var mother = result.Heirs.First(h => h.Relation == RelationType.Mother);
+
+        // Expected: wife 1/8, daughters combined 7/10, mother 7/40 after Radd (spouse excluded)
+        Assert.That(wife.Result.Fraction, Is.EqualTo(Fraction.Eighth), "Wife should get fixed 1/8");
+        Assert.That(daughters.Result.Fraction, Is.EqualTo(new Fraction(7, 10)), "Daughters combined should get 7/10 after Radd");
+        Assert.That(mother.Result.Fraction, Is.EqualTo(new Fraction(7, 40)), "Mother should get 7/40 after Radd");
+        Assert.That(result.TotalFraction, Is.EqualTo(Fraction.One), "Total should equal 1");
+    }
+
+    [Test]
+    public void Calculate_WifeFatherAndMother_OneThirdRaddForMother()
+    {
+        var deceased = new DeceasedPerson(Gender.Male);
+        var inheritanceCase = new InheritanceCase(deceased);
+        inheritanceCase.AddHeir(new Wife());
+        inheritanceCase.AddHeir(new Father());
+        inheritanceCase.AddHeir(new Mother());
+
+        var result = engine.Calculate(inheritanceCase);
+        Assert.That(result.IsSuccessful, Is.True);
+
+        var wife = result.Heirs.First(h => h.Relation == RelationType.Wife);
+        var father = result.Heirs.First(h => h.Relation == RelationType.Father);
+        var mother = result.Heirs.First(h => h.Relation == RelationType.Mother);
+
+        var wifeExpected = Fraction.Quarter;
+        var motherExpected = (Fraction.One - wifeExpected) / 3;
+        var fatherExpected = Fraction.One - wifeExpected - motherExpected; // Technically Father 1/6 + Resiude after Mother
+
+        Assert.That(wife.Result.Fraction, Is.EqualTo(wifeExpected), "Wife should get fixed 1/4");
+        Assert.That(mother.Result.Fraction, Is.EqualTo(motherExpected), "Mother should get 1/4"); // 1/6 + 1/3 * 3/4 
+        Assert.That(father.Result.Fraction, Is.EqualTo(fatherExpected), "Father should get 1/2");
+        Assert.That(result.TotalFraction, Is.EqualTo(Fraction.One), "Total should equal 1");
+    }
+
+    [Test]
     public void Calculate_FatherAndDaughter_FatherGetsFixedPlusResidue()
     {
         var deceased = new DeceasedPerson(Gender.Male);
