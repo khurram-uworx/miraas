@@ -1,13 +1,13 @@
 namespace MiraasWeb.Domain;
 
-public enum Gender { Male, Female }
+public enum GenderType { Male, Female }
 
 // public because of tests
 public class DeceasedPerson
 {
-    public Gender Gender { get; set; }
+    public GenderType Gender { get; set; }
 
-    public DeceasedPerson(Gender gender = Gender.Male)
+    public DeceasedPerson(GenderType gender = GenderType.Male)
     {
         Gender = gender;
     }

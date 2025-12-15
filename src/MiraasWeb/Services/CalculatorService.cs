@@ -81,7 +81,7 @@ public class CalculatorService
                     ErrorMessage = "No heirs specified."
                 };
 
-            var gender = (Gender)request.DeceasedGender;
+            var gender = (GenderType)request.DeceasedGender;
             var deceased = new DeceasedPerson(gender);
 
             var inheritanceCase = new InheritanceCase(deceased);

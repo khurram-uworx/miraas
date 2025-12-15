@@ -18,7 +18,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_GrandfatherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Grandfather());
@@ -31,7 +31,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_GrandfatherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Grandfather());
@@ -44,7 +44,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_NoFatherNoSon_GrandfatherNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
 
@@ -60,7 +60,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_FullBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new FullBrother());
@@ -73,7 +73,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_FullSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new FullSister());
@@ -86,7 +86,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_ConsanguineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -99,7 +99,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -112,7 +112,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_UterineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new UterineBrother());
@@ -125,7 +125,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_UterineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new UterineSister());
@@ -142,7 +142,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_FullBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new FullBrother());
@@ -155,7 +155,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_FullSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new FullSister());
@@ -168,7 +168,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_ConsanguineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -181,7 +181,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -194,7 +194,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_UterineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new UterineBrother());
@@ -207,7 +207,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_UterineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new UterineSister());
@@ -224,7 +224,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_FullBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new FullBrother());
@@ -237,7 +237,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_FullSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new FullSister());
@@ -250,7 +250,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_ConsanguineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -263,7 +263,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -276,7 +276,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_UterineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new UterineBrother());
@@ -289,7 +289,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_UterineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new UterineSister());
@@ -306,7 +306,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_FullBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new FullBrother());
@@ -319,7 +319,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_FullSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new FullSister());
@@ -332,7 +332,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_ConsanguineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -345,7 +345,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -358,7 +358,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_UterineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new UterineBrother());
@@ -371,7 +371,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_UterineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new UterineSister());
@@ -388,7 +388,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FullBrotherPresent_ConsanguineBrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -401,7 +401,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FullBrotherPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -414,7 +414,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FullSisterPresent_ConsanguineBrotherNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullSister());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -427,7 +427,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FullSisterPresent_ConsanguineSisterBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullSister());
         inheritanceCase.AddHeir(new ConsanguineSister());
@@ -444,7 +444,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_SonOfSonBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new SonOfSon());
@@ -457,7 +457,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonPresent_DaughterOfSonBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -474,7 +474,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_OneDaughterOnly_DaughterOfSonNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter { Count = 1 });
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -487,7 +487,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_TwoDaughters_DaughterOfSonBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter { Count = 2 });
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -504,7 +504,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonOfSonPresent_DaughterOfSonNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -521,7 +521,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_MaternalGrandmotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new GrandmotherMaternal());
@@ -534,7 +534,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MotherPresent_MaternalGrandmotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new GrandmotherMaternal());
@@ -547,7 +547,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherPresent_PaternalGrandmotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new GrandmotherPaternal());
@@ -560,7 +560,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherPresent_PaternalGrandmotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new GrandmotherPaternal());
@@ -573,7 +573,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MotherOnly_PaternalGrandmotherNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new GrandmotherPaternal());
@@ -586,7 +586,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherOnly_MaternalGrandmotherNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new GrandmotherMaternal());
@@ -603,7 +603,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_NoSonNoFather_FullBrotherNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
 
@@ -615,7 +615,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_OnlyWife_NothingBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
 
@@ -627,7 +627,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_OnlyDaughter_NothingBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter());
 
@@ -639,7 +639,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MotherAndHusband_NothingBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new Husband());
@@ -652,7 +652,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonAndDaughter_NeitherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Daughter());
@@ -670,7 +670,7 @@ public class BlockingTests
     [Test]
     public void IsBlocked_FatherBlocksGrandfather_ReturnsTrue()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Grandfather());
@@ -683,7 +683,7 @@ public class BlockingTests
     [Test]
     public void IsBlocked_NoBlocker_ReturnsFalse()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
 
@@ -695,7 +695,7 @@ public class BlockingTests
     [Test]
     public void IsBlocked_FullBrotherBlocksConsanguineBrother_ReturnsTrue()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -708,7 +708,7 @@ public class BlockingTests
     [Test]
     public void IsBlocked_WifeNeverBlocked_ReturnsFalse()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Father());
@@ -726,7 +726,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MultipleBlockers_AllApplied()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Father());
@@ -746,7 +746,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_ComplexSiblingHierarchy_ProperBlocking()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
         inheritanceCase.AddHeir(new FullSister());
@@ -767,7 +767,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_AllGrandparentsAndDescendants_CorrectBlocking()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Mother());
@@ -787,7 +787,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonAndFatherPresent_AllSiblingsAndGrandparentsBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Father());
@@ -812,7 +812,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_OnlyGrandchildren_NoneBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new SonOfSon());
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -831,7 +831,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_DaughterWithoutSon_SiblingsNotBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter());
         inheritanceCase.AddHeir(new FullBrother());
@@ -847,7 +847,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_OnlyUterineSiblings_NoneBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new UterineBrother());
         inheritanceCase.AddHeir(new UterineSister());
@@ -861,7 +861,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MotherAndDaughter_NoGrandmotherBlocking()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new Daughter());
@@ -880,7 +880,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_GrandfatherWithoutFather_OnlySiblingsBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new FullBrother());
@@ -900,7 +900,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MultipleDaughters_DaughterOfSonStillBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter { Count = 3 });
         inheritanceCase.AddHeir(new DaughterOfSon());
@@ -914,7 +914,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_AllSiblingTypes_FullBlocksConsanguineOnly()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new FullBrother());
         inheritanceCase.AddHeir(new ConsanguineBrother());
@@ -939,7 +939,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_HusbandWithAllHeirs_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Husband());
         inheritanceCase.AddHeir(new Son());
@@ -955,7 +955,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_WifeWithAllHeirs_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
         inheritanceCase.AddHeir(new Son());
@@ -975,7 +975,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_FatherWithAllDescendants_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Son());
@@ -990,7 +990,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_MotherWithAllDescendants_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new Son());
@@ -1009,7 +1009,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_SonWithAllHeirs_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Father());
@@ -1025,7 +1025,7 @@ public class BlockingTests
     [Test]
     public void GetBlockedHeirs_DaughterWithAllHeirs_NeverBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter());
         inheritanceCase.AddHeir(new Father());

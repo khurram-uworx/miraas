@@ -28,7 +28,7 @@ public class Validator
     {
         int wifeCount = inheritanceCase.GetHeirCount(RelationType.Wife);
 
-        if (wifeCount > 0 && inheritanceCase.Deceased.Gender != Gender.Male)
+        if (wifeCount > 0 && inheritanceCase.Deceased.Gender != GenderType.Male)
             errors.Add($"Deceased must be male to have wives. Found: {wifeCount} wives.");
         else if (wifeCount > 4)
             errors.Add($"Cannot have more than 4 wives. Found: {wifeCount}");
@@ -38,7 +38,7 @@ public class Validator
     {
         int husbandCount = inheritanceCase.GetHeirCount(RelationType.Husband);
 
-        if (husbandCount > 0 && inheritanceCase.Deceased.Gender != Gender.Female)
+        if (husbandCount > 0 && inheritanceCase.Deceased.Gender != GenderType.Female)
             errors.Add($"Deceased must be female to have husband.");
         else if (husbandCount > 1)
             errors.Add($"Cannot have more than 1 husband. Found: {husbandCount}");
