@@ -17,7 +17,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_SingleSon_SonGetsAll()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
 
@@ -31,7 +31,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_SingleDaughter_DaughterGetsAll()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Daughter());
 
@@ -44,7 +44,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_WifeAndSon_CorrectShares()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
         inheritanceCase.AddHeir(new Son());
@@ -64,7 +64,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_WifeAndDaughter_CorrectShares()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
         inheritanceCase.AddHeir(new Daughter());
@@ -82,7 +82,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_TwoWivesAndSon_WivesShareEqually()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife(2));
         inheritanceCase.AddHeir(new Son());
@@ -97,7 +97,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_SonAndDaughter_SonGetsTwiceAsDaughtersShare()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new Daughter());
@@ -117,7 +117,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_FatherAndSon_FatherGetsSixth()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Son());
@@ -133,7 +133,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_FatherAlone_FatherGetsAll()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
 
@@ -147,7 +147,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_MotherAndSon_MotherGetsSixth()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new Son());
@@ -163,7 +163,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_MotherAlone_MotherGetsAll()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
 
@@ -177,7 +177,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_FatherAndGrandfather_GrandfatherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Grandfather());
@@ -192,7 +192,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_SonAndBrother_BrotherBlocked()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
         inheritanceCase.AddHeir(new FullBrother());
@@ -207,7 +207,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_ComplexScenario_CorrectDistribution()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
         inheritanceCase.AddHeir(new Daughter(2));
@@ -230,7 +230,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_UterineSiblings_CorrectShare()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new UterineBrother(2));
 
@@ -244,7 +244,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_TotalFractionEqualsOne()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
         inheritanceCase.AddHeir(new Son());
@@ -260,7 +260,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_ResultHasExpectedProperties()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
 
@@ -274,7 +274,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_NoHeirs_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
 
         var result = engine.Calculate(inheritanceCase);
@@ -286,7 +286,7 @@ public class CalculationBasicTests
     [Test]
     public void Calculate_FiveWives_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         var wife = new Wife();
         wife.Count = 5;

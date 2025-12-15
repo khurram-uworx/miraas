@@ -73,7 +73,7 @@ class ShareEngine
                     return (Fraction.Sixth, "Mother: 1/6 of estate (with children or siblings)");
                 else if (inheritanceCase.DeceasedHasSiblings())
                     return (Fraction.Sixth, "Mother: 1/6 of estate (with children or siblings)");
-                else if (!inheritanceCase.HasSpouse() && !inheritanceCase.HasHeir(RelationType.Father))
+                else if (!inheritanceCase.DeceasedHasSpouse() && !inheritanceCase.HasHeir(RelationType.Father))
                     return (Fraction.Third, "Mother: 1/3 of estate (no children or siblings)");
                 else
                     return (Fraction.Zero, "Mother: 1/3 of residue (no children/sibling/spouse/father");
@@ -303,20 +303,11 @@ class ShareEngine
             return;
 
         var maleHeirs = residuaryHeirs
-            .Where(h =>
-            h.Relation == RelationType.Son
-            || h.Relation == RelationType.SonOfSon
-            || h.Relation == RelationType.Father
-            || h.Relation == RelationType.FullBrother
-            || h.Relation == RelationType.ConsanguineBrother)
+            .Where(h => h.Gender == GenderType.Male)
             .ToList();
 
         var femaleHeirs = residuaryHeirs
-            .Where(h =>
-            h.Relation == RelationType.Daughter
-            || h.Relation == RelationType.DaughterOfSon
-            || h.Relation == RelationType.FullSister
-            || h.Relation == RelationType.ConsanguineSister)
+            .Where(h => h.Gender == GenderType.Female)
             .ToList();
 
         if (maleHeirs.Count > 0 && femaleHeirs.Count > 0)

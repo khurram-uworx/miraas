@@ -60,6 +60,7 @@ public abstract class Heir
 {
     ShareResult shareResult = new();
 
+    public abstract GenderType Gender { get; }
     public abstract RelationType Relation { get; }
 
     public int Count { get; set; } = 1;
@@ -115,6 +116,7 @@ public abstract class Heir
 // Direct Descendants
 public class Son : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.Son;
 
     public Son(int count = 1) : base(count) { }
@@ -122,6 +124,7 @@ public class Son : Heir
 
 public class Daughter : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.Daughter;
 
     public Daughter(int count = 1) : base(count) { }
@@ -129,6 +132,7 @@ public class Daughter : Heir
 
 public class SonOfSon : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.SonOfSon;
 
     public SonOfSon(int count = 1) : base(count) { }
@@ -136,6 +140,7 @@ public class SonOfSon : Heir
 
 public class DaughterOfSon : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.DaughterOfSon;
 
     public DaughterOfSon(int count = 1) : base(count) { }
@@ -144,6 +149,7 @@ public class DaughterOfSon : Heir
 // Ascendants
 public class Father : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.Father;
 
     public Father() : base(1) { }
@@ -151,6 +157,7 @@ public class Father : Heir
 
 public class Mother : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.Mother;
 
     public Mother() : base(1) { }
@@ -158,6 +165,7 @@ public class Mother : Heir
 
 public class Grandfather : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.Grandfather;
 
     public Grandfather() : base(1) { }
@@ -165,6 +173,7 @@ public class Grandfather : Heir
 
 public class GrandmotherMaternal : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.GrandmotherMaternal;
 
     public GrandmotherMaternal() : base(1) { }
@@ -172,6 +181,7 @@ public class GrandmotherMaternal : Heir
 
 public class GrandmotherPaternal : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.GrandmotherPaternal;
 
     public GrandmotherPaternal() : base(1) { }
@@ -180,6 +190,7 @@ public class GrandmotherPaternal : Heir
 // Spouse
 public class Husband : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.Husband;
 
     public Husband(int count = 1) : base(count) { }
@@ -187,6 +198,7 @@ public class Husband : Heir
 
 public class Wife : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.Wife;
 
     public Wife(int count = 1) : base(count) { }
@@ -195,6 +207,7 @@ public class Wife : Heir
 // Full Siblings
 public class FullBrother : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.FullBrother;
 
     public FullBrother(int count = 1) : base(count) { }
@@ -202,6 +215,7 @@ public class FullBrother : Heir
 
 public class FullSister : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.FullSister;
 
     public FullSister(int count = 1) : base(count) { }
@@ -210,6 +224,7 @@ public class FullSister : Heir
 // same father, different mother
 public class ConsanguineBrother : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.ConsanguineBrother;
 
     public ConsanguineBrother(int count = 1) : base(count) { }
@@ -217,6 +232,7 @@ public class ConsanguineBrother : Heir
 
 public class ConsanguineSister : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.ConsanguineSister;
 
     public ConsanguineSister(int count = 1) : base(count) { }
@@ -225,6 +241,7 @@ public class ConsanguineSister : Heir
 // same mother, different father
 public class UterineBrother : Heir
 {
+    public override GenderType Gender => GenderType.Male;
     public override RelationType Relation => RelationType.UterineBrother;
 
     public UterineBrother(int count = 1) : base(count) { }
@@ -232,6 +249,7 @@ public class UterineBrother : Heir
 
 public class UterineSister : Heir
 {
+    public override GenderType Gender => GenderType.Female;
     public override RelationType Relation => RelationType.UterineSister;
 
     public UterineSister(int count = 1) : base(count) { }

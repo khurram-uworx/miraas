@@ -70,16 +70,6 @@ public class BlockingEngine
             if (inheritanceCase.HasHeir(rule.Blocker))
                 blocked.Add(rule.Blocked);
 
-        bool hasChildren = inheritanceCase.HasHeir(RelationType.Son)
-            || inheritanceCase.HasHeir(RelationType.Daughter);
-        bool hasGrandchildren = inheritanceCase.HasHeir(RelationType.SonOfSon)
-            || inheritanceCase.HasHeir(RelationType.DaughterOfSon);
-        bool hasDescendent = hasChildren || hasGrandchildren;
-        bool hasMaleHeir = inheritanceCase.HasHeir(RelationType.Son)
-            || inheritanceCase.HasHeir(RelationType.SonOfSon)
-            || inheritanceCase.HasHeir(RelationType.Father)
-            || inheritanceCase.HasHeir(RelationType.Grandfather);
-
         if (inheritanceCase.HasHeir(RelationType.Son))
         {
             blocked.Add(RelationType.SonOfSon);
@@ -95,7 +85,7 @@ public class BlockingEngine
             blocked.Add(RelationType.UterineSister);
         }
 
-        if (hasMaleHeir || inheritanceCase.HasHeir(RelationType.FullBrother))
+        if (inheritanceCase.DeceasedHasMaleDescendantsOrAscendants() || inheritanceCase.HasHeir(RelationType.FullBrother))
         {
             blocked.Add(RelationType.ConsanguineBrother);
             blocked.Add(RelationType.ConsanguineSister);
@@ -104,19 +94,19 @@ public class BlockingEngine
         if (inheritanceCase.GetHeirCount(RelationType.FullSister) > 2)
             blocked.Add(RelationType.ConsanguineSister);
 
-        if (hasMaleHeir)
+        if (inheritanceCase.DeceasedHasMaleDescendantsOrAscendants())
         {
             blocked.Add(RelationType.FullBrother);
             blocked.Add(RelationType.FullSister);
         }
 
-        if (hasDescendent || hasMaleHeir /* father or grand father*/)
+        if (inheritanceCase.DeceasedHasDescendants() || inheritanceCase.DeceasedHasMaleDescendantsOrAscendants() /* father or grand father*/)
         {
             blocked.Add(RelationType.UterineBrother);
             blocked.Add(RelationType.UterineSister);
         }
 
-        if (hasGrandchildren && inheritanceCase.HasHeir(RelationType.Father))
+        if (inheritanceCase.DeceasedHasGrandChildren() && inheritanceCase.HasHeir(RelationType.Father))
         {
             blocked.Add(RelationType.Grandfather);
             blocked.Add(RelationType.GrandmotherMaternal);

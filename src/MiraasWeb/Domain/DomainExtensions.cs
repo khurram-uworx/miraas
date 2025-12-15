@@ -2,11 +2,34 @@
 
 static class DomainExtensions
 {
-    public static bool DeceasedHasDescendants(this InheritanceCase i) =>
+    public static bool DeceasedHasChildren(this InheritanceCase i) =>
         i.HasHeir(RelationType.Son)
-        || i.HasHeir(RelationType.Daughter)
-        || i.HasHeir(RelationType.SonOfSon)
+        || i.HasHeir(RelationType.Daughter);
+
+    public static bool DeceasedHasGrandChildren(this InheritanceCase i) =>
+        i.HasHeir(RelationType.SonOfSon)
         || i.HasHeir(RelationType.DaughterOfSon);
+
+    public static bool DeceasedHasDescendants(this InheritanceCase i) =>
+        DeceasedHasChildren(i)
+        || DeceasedHasGrandChildren(i);
+
+    public static bool DeceasedHasMaleDescendants(this InheritanceCase i) =>
+        i.HasHeir(RelationType.Son)
+        || i.HasHeir(RelationType.SonOfSon);
+
+    public static bool DeceasedHasMaleAscendants(this InheritanceCase i) =>
+        i.HasHeir(RelationType.Father)
+        || i.HasHeir(RelationType.Grandfather);
+
+    public static bool DeceasedHasMaleDescendantsOrAscendants(this InheritanceCase i) =>
+        DeceasedHasMaleDescendants(i)
+        || DeceasedHasMaleAscendants(i);
+
+    public static bool DeceasedHasMaleHeirs(this InheritanceCase i) =>
+        DeceasedHasMaleDescendantsOrAscendants(i)
+        || i.HasHeir(RelationType.FullBrother)
+        || i.HasHeir(RelationType.ConsanguineBrother);
 
     public static bool DeceasedHasSiblings(this InheritanceCase i) =>
         i.HasHeir(RelationType.FullBrother)
@@ -16,7 +39,7 @@ static class DomainExtensions
         || i.HasHeir(RelationType.UterineBrother)
         || i.HasHeir(RelationType.UterineSister);
 
-    public static bool HasSpouse(this InheritanceCase i) =>
-        (i.Deceased.Gender == Gender.Male && i.HasHeir(RelationType.Wife))
-        || (i.Deceased.Gender == Gender.Female && i.HasHeir(RelationType.Husband));
+    public static bool DeceasedHasSpouse(this InheritanceCase i) =>
+        (i.Deceased.Gender == GenderType.Male && i.HasHeir(RelationType.Wife))
+        || (i.Deceased.Gender == GenderType.Female && i.HasHeir(RelationType.Husband));
 }

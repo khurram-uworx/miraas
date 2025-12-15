@@ -9,7 +9,7 @@ public class ValidationTests
     [Test]
     public void Validate_ValidCase_ReturnsSuccess()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Son());
 
@@ -33,7 +33,7 @@ public class ValidationTests
     [Test]
     public void Validate_WifeCountTooHigh_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         var wife = new Wife();
         wife.Count = 5;
@@ -51,7 +51,7 @@ public class ValidationTests
     [Test]
     public void Validate_MaxWives_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife(4));
 
@@ -63,7 +63,7 @@ public class ValidationTests
     [Test]
     public void Validate_TwoHusbands_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Husband());
         inheritanceCase.AddHeir(new Husband());
@@ -78,7 +78,7 @@ public class ValidationTests
     [Test]
     public void Validate_OneHusband_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Husband());
 
@@ -90,7 +90,7 @@ public class ValidationTests
     [Test]
     public void Validate_MultipleValidHeirs_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife(2));
         inheritanceCase.AddHeir(new Son(3));
@@ -105,7 +105,7 @@ public class ValidationTests
     [Test]
     public void Validate_NegativeHeirCount_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         var son = new Son(1);
         son.Count = -1;
@@ -119,7 +119,7 @@ public class ValidationTests
     [Test]
     public void Validate_ZeroHeirCount_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         var son = new Son(1);
         son.Count = 0;
@@ -137,7 +137,7 @@ public class ValidationTests
     [Test]
     public void Validate_MaleDeceasedWithHusband_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Husband());
 
@@ -153,7 +153,7 @@ public class ValidationTests
     [Test]
     public void Validate_FemaleDeceasedWithWife_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
 
@@ -169,7 +169,7 @@ public class ValidationTests
     [Test]
     public void Validate_MaleDeceasedWithWife_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Wife());
 
@@ -181,7 +181,7 @@ public class ValidationTests
     [Test]
     public void Validate_FemaleDeceasedWithHusband_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Female);
+        var deceased = new DeceasedPerson(GenderType.Female);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Husband());
 
@@ -193,7 +193,7 @@ public class ValidationTests
     [Test]
     public void Validate_MultipleFathers_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Father());
         inheritanceCase.AddHeir(new Father());
@@ -210,7 +210,7 @@ public class ValidationTests
     [Test]
     public void Validate_MultipleMothers_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Mother());
         inheritanceCase.AddHeir(new Mother());
@@ -227,7 +227,7 @@ public class ValidationTests
     [Test]
     public void Validate_MultipleGrandfathers_ReturnsFail()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         inheritanceCase.AddHeir(new Grandfather());
         inheritanceCase.AddHeir(new Grandfather());
@@ -244,7 +244,7 @@ public class ValidationTests
     [Test]
     public void Validate_EmptyHeirsList_Succeeds()
     {
-        var deceased = new DeceasedPerson(Gender.Male);
+        var deceased = new DeceasedPerson(GenderType.Male);
         var inheritanceCase = new InheritanceCase(deceased);
         // No heirs added - should be valid (Bayt-ul-Maal case)
 
