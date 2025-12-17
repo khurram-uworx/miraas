@@ -1,0 +1,84 @@
+@model MiraasWeb.Controllers.IssueDetail
+@{
+    ViewData["Title"] = $"Issue #{Model.IssueNumber}";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Issues")">Issues</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Issue #@Model.IssueNumber</li>
+                </ol>
+            </nav>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>📋 Issue Report #@Model.IssueNumber</h1>
+                <div>
+                    <a href="@Url.Action("Download", "Issues", new { fileName = Model.FileName })" 
+                       class="btn btn-outline-secondary">
+                        📥 Download
+                    </a>
+                    <a href="@Url.Action("Index", "Issues")" class="btn btn-outline-primary">
+                        ← Back to List
+                    </a>
+                </div>
+            </div>
+
+            <!-- Report Metadata -->
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📅 Report Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Issue Number:</strong> #@Model.IssueNumber
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Reported Date:</strong> @Model.ReportedDate
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Comment -->
+            <div class="card mb-3">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">💬 User Comment</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0" style="white-space: pre-wrap;">@Model.UserComment</p>
+                </div>
+            </div>
+
+            <!-- Calculation Data -->
+            <div class="card mb-3">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">📊 Calculation Request Data</h5>
+                </div>
+                <div class="card-body">
+                    <pre class="mb-0" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #dee2e6;">@Model.CalculationData</pre>
+                </div>
+            </div>
+
+            <!-- Raw JSON Data -->
+            <div class="card mb-3">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">🔧 Raw JSON Data</h5>
+                </div>
+                <div class="card-body">
+                    <pre class="mb-0" style="background-color: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;"><code>@Model.RawJsonData</code></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-light" role="alert">
+                <small class="text-muted">
+                    <strong>Note:</strong> This issue report contains user-submitted data about a calculation problem. 
+                    Review the user's comment and the calculation data to understand and address the reported issue.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>

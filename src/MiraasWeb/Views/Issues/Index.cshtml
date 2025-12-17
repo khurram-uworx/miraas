@@ -69,8 +69,12 @@
                                                 }
                                             </td>
                                             <td>
+                                                <a href="@Url.Action("Details", "Issues", new { fileName = issue.FileName })" 
+                                                   class="btn btn-sm btn-primary me-2">
+                                                    �️ Vielw
+                                                </a>
                                                 <a href="@Url.Action("Download", "Issues", new { fileName = issue.FileName })" 
-                                                   class="btn btn-sm btn-outline-primary">
+                                                   class="btn btn-sm btn-outline-secondary">
                                                     📥 Download
                                                 </a>
                                             </td>
