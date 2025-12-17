@@ -55,7 +55,7 @@ public class CalculationResult
     public static CalculationResult Success(List<Heir> heirs, Fraction totalFraction) =>
         new CalculationResult
         {
-            Heirs = heirs,
+            Heirs = heirs.Where(h => h.Result.Fraction > Fraction.Zero).ToList(),
             TotalFraction = totalFraction,
             IsSuccessful = true
         };
@@ -95,9 +95,11 @@ public class CalculationEngine
             if (activeHeirs.Count == 0)
                 return CalculationResult.Failure("All heirs are blocked from inheritance.");
 
-            // Calculate fixed shares
-            var fixedShareHeirs = new List<Heir>();
             var totalFixed = Fraction.Zero;
+            var fixedShareHeirs = new List<Heir>();
+            var residuaryHeirs = new List<Heir>();
+
+            // Calculate fixed shares
             foreach (var heir in activeHeirs)
             {
                 var share = shareEngine.GetShare(heir.Relation, inheritanceCase);
@@ -152,7 +154,7 @@ public class CalculationEngine
                 }
 
                 var residuaryRelations = ShareEngine.DetermineResiduaryGroup(inheritanceCase).ToList();
-                var residuaryHeirs = inheritanceCase.Heirs.Where(h => residuaryRelations.Contains(h.Relation)).ToList();
+                residuaryHeirs = inheritanceCase.Heirs.Where(h => residuaryRelations.Contains(h.Relation)).ToList();
 
                 if (residue > Fraction.Zero && residuaryHeirs.Count > 0)
                 {
@@ -167,7 +169,7 @@ public class CalculationEngine
             }
 
             // Compiling result
-            var allCalculatedHeirs = new List<Heir>(activeHeirs);
+            List<Heir> allCalculatedHeirs = [.. fixedShareHeirs, .. residuaryHeirs];
             var result = CalculationResult.Success(allCalculatedHeirs, totalFixed);
 
             if (totalFixed != Fraction.One)
