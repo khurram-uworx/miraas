@@ -169,7 +169,8 @@ public class CalculationEngine
             }
 
             // Compiling result
-            List<Heir> allCalculatedHeirs = [.. fixedShareHeirs, .. residuaryHeirs];
+            List<Heir> allCalculatedHeirs = fixedShareHeirs //[.. fixedShareHeirs, .. residuaryHeirs];
+                .Union(residuaryHeirs).Distinct().ToList();
             var result = CalculationResult.Success(allCalculatedHeirs, totalFixed);
 
             if (totalFixed != Fraction.One)

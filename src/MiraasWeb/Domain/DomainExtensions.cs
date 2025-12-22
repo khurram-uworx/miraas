@@ -2,6 +2,28 @@
 
 static class DomainExtensions
 {
+    public static bool HasAny(this InheritanceCase c, params RelationType[] relations)
+    {
+        foreach (var r in relations)
+            if (c.HasHeir(r)) return true;
+
+        return false;
+    }
+
+    public static bool HasOnly(this InheritanceCase c, params RelationType[] allowed)
+    {
+        foreach (RelationType r in Enum.GetValues(typeof(RelationType)))
+        {
+            if (allowed.Contains(r))
+                continue;
+
+            if (c.HasHeir(r))
+                return false;
+        }
+
+        return true;
+    }
+
     public static bool DeceasedHasChildren(this InheritanceCase i) =>
         i.HasHeir(RelationType.Son)
         || i.HasHeir(RelationType.Daughter);
