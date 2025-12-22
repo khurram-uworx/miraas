@@ -196,14 +196,6 @@ class ShareEngine
         ];
     }
 
-    static bool hasAny(InheritanceCase c, params RelationType[] relations)
-    {
-        foreach (var r in relations)
-            if (c.HasHeir(r)) return true;
-
-        return false;
-    }
-
     public static IEnumerable<RelationType> DetermineResiduaryGroup(InheritanceCase inheritanceCase)
     {
         RelationType[] children = [RelationType.Son, RelationType.Daughter];
@@ -212,32 +204,35 @@ class ShareEngine
         RelationType[] grandfatherLine = [RelationType.Grandfather /* add higher paternal ancestors if present */];
         RelationType[] fullBrotherLine = [RelationType.FullBrother, /* add sons of full brother if named in enum, e.g. SonOfFullBrother */];
         RelationType[] consanguineBrotherLine = [RelationType.ConsanguineBrother /* add their descendants */];
+        
         // we now have a place here
         // RelationType[] paternalUncleLine = [RelationType.PaternalUncle /* add paternal uncle descendants if present */];
 
-        if (hasAny(inheritanceCase, RelationType.Son))
+        if (inheritanceCase.HasAny(RelationType.Son))
             return children.Where(r => inheritanceCase.HasHeir(r)); // include daughter-of-son as asaba-bi-ghayrihi ?
-        if (hasAny(inheritanceCase, RelationType.SonOfSon))
+        if (inheritanceCase.HasAny(RelationType.SonOfSon))
             return grandChildren.Where(r => inheritanceCase.HasHeir(r)).ToList();
         // what if out of two sons, one is missing
 
         if (inheritanceCase.HasHeir(RelationType.Father))
             return fatherLine.Where(r => inheritanceCase.HasHeir(r)).ToList();
 
-        if (hasAny(inheritanceCase, RelationType.Grandfather /* add others if present */))
+        if (inheritanceCase.HasAny(RelationType.Grandfather))
             return grandfatherLine.Where(r => inheritanceCase.HasHeir(r)).ToList();
 
-        if (hasAny(inheritanceCase, RelationType.FullBrother /* or their male descendants */))
+        if (inheritanceCase.HasAny(RelationType.FullBrother /* or their male descendants */))
         {
             var group = new List<RelationType>();
             if (inheritanceCase.HasHeir(RelationType.FullBrother)) group.Add(RelationType.FullBrother);
             if (inheritanceCase.HasHeir(RelationType.FullSister)) group.Add(RelationType.FullSister); // joins as asaba bi-ghayrihi
+
             // we now have a place here
             // full-brother descendants if present...
+            
             return group;
         }
 
-        if (hasAny(inheritanceCase, RelationType.ConsanguineBrother /* or their descendants */))
+        if (inheritanceCase.HasAny(RelationType.ConsanguineBrother /* or their descendants */))
         {
             var group = new List<RelationType>();
             if (inheritanceCase.HasHeir(RelationType.ConsanguineBrother)) group.Add(RelationType.ConsanguineBrother);
@@ -257,9 +252,13 @@ class ShareEngine
         // Special asaba ma'a ghayrihi for Full Sister triggered by presence of daughters
         bool hasDaughterOrDaughterOfSon = inheritanceCase.HasHeir(RelationType.Daughter) || inheritanceCase.HasHeir(RelationType.DaughterOfSon);
         if (hasDaughterOrDaughterOfSon && inheritanceCase.HasHeir(RelationType.FullSister))
-            return new List<RelationType> { RelationType.FullSister };
+            return [RelationType.FullSister];
 
-        return new List<RelationType>();
+        // if only spouse
+        if (inheritanceCase.HasOnly(RelationType.Husband, RelationType.Wife))
+            return [RelationType.Husband, RelationType.Wife];
+
+        return [];
     }
 
     public static bool DistributeRadd(InheritanceCase inheritanceCase, List<Heir> fixedShareHeirs, Fraction residue)
