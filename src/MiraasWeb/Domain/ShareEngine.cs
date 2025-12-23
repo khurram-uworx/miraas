@@ -217,7 +217,7 @@ class ShareEngine
         if (inheritanceCase.HasHeir(RelationType.Father))
             return fatherLine.Where(r => inheritanceCase.HasHeir(r)).ToList();
 
-        if (inheritanceCase.HasAny(RelationType.Grandfather))
+        if (inheritanceCase.HasAny(RelationType.Grandfather) && !inheritanceCase.DeceasedHasDescendants())
             return grandfatherLine.Where(r => inheritanceCase.HasHeir(r)).ToList();
 
         if (inheritanceCase.HasAny(RelationType.FullBrother /* or their male descendants */))
