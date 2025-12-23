@@ -351,9 +351,14 @@ public class CalculationAdvancedTests
         var grandfather = result.Heirs.First(h => h.Relation == RelationType.Grandfather);
         var daughter = result.Heirs.First(h => h.Relation == RelationType.Daughter);
 
-        Assert.That(daughter.Result.Fraction, Is.EqualTo(Fraction.Half));
-        Assert.That(grandfather.Result.Fraction, Is.EqualTo(Fraction.Half), "Grandfather gets 1/6 fixed + 1/3 residue with female descendants");
-        Assert.That(daughter.Result.Fraction, Is.EqualTo(grandfather.Result.Fraction), "Daughter and grandfather should receive equal shares");
+        // Daughter: 1/2 fixed share
+        // Residue: 1/2 (split 2:1 male:female with grandfather)
+        // Grandfather: 2 units of residue = 2/3 × 1/2 = 1/3
+        // Daughter: 1 unit of residue = 1/3 × 1/2 = 1/6
+        // Daughter total: 1/2 + 1/6 = 3/4
+        Assert.That(daughter.Result.Fraction, Is.EqualTo(new Fraction(3, 4)), "Daughter gets 1/2 + Radd");
+        Assert.That(grandfather.Result.Fraction, Is.EqualTo(new Fraction(1, 4)), "Grandfather gets 1/6 + Radd");
+        Assert.That(result.TotalFraction, Is.EqualTo(Fraction.One), "Total should equal 1");
     }
 
     [Test]
