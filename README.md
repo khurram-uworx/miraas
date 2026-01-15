@@ -18,11 +18,12 @@ The system prioritizes **correctness, simplicity, and trustworthiness** over com
 
 ## Target Users
 
-- General Muslims seeking inheritance distribution
-- Students learning Islamic inheritance
-- Imams / teachers
-- Legal assistants (non-authoritative reference)
-- Families who want a quick distribution overview
+Students learning Islamic inheritance
+
+- [Miraas: A Software Engineering Perspective on Islamic Inheritance Calculation](https://khurram-uworx.github.io/2025/12/12/Miraas1.html)
+- [Miraas: Choosing Boring Over Shiny](https://khurram-uworx.github.io/2025/12/13/Miraas2.html)
+- [Miraas: Taming Complexity with Domain-Driven Design](https://khurram-uworx.github.io/2025/12/17/Miraas3.html)
+- [Miraas: A Blast from the Past - Logic Programming Meets Modern C#](https://khurram-uworx.github.io/2025/12/18/Miraas4.html)
 
 The application is not a substitute for fatwa, legal ruling, or Islamic scholar verification.
 
